@@ -22,7 +22,8 @@ def jwks():
 
         n_bytes = public_numbers.n.to_bytes((public_numbers.n.bit_length() + 7) // 8, byteorder='big')
         e_bytes = public_numbers.e.to_bytes((public_numbers.e.bit_length() + 7) // 8, byteorder='big')
-        
+
+        #This line shows public key parameters being decoded (n,e) into base64 for the JWKS server
         n_b64 = base64.urlsafe_b64encode(n_bytes).decode('utf-8').rstrip('=')
         e_b64 = base64.urlsafe_b64encode(e_bytes).decode('utf-8').rstrip('=')
         
@@ -38,6 +39,7 @@ def jwks():
 
 @auth_blueprint.route('/auth', methods=['POST'])
 def auth():
+    #This line checks if the client is requesting a JWT with an expired key
     expired = request.args.get('expired', '').lower() == 'true'
     row = database.get_key(expired=expired)
     
