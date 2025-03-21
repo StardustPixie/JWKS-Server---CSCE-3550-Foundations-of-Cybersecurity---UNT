@@ -1,57 +1,39 @@
-# JWKS-Server---CSCE-3550-Foundations-of-Cybersecurity---UNT
+# JWKS Server (JSON Web Key Set)
+A lightweight RESTful server for generating and serving JSON Web Keys (JWKS) to verify JWTs, with built-in mock authentication and key expiration support.
 
-# JWKS Server for JWT Key Management
-
-A RESTful server that generates and serves JSON Web Key Sets (JWKS) for verifying JWTs, with support for key expiry and mock authentication.
 
 ## Features
-- Generates RSA key pairs with unique Key IDs (`kid`) and expiry times.
-- `/jwks` endpoint to retrieve valid public keys.
-- `/auth` endpoint to issue JWTs (optionally signed with expired keys).
+- RSA key pair generation with unique `kid` and expiry.
+- `/.well-known/jwks.json` endpoint returns valid public keys.
+- `/auth` issues signed JWTs (including expired ones via query).
+- SQLite database used for persistent key storage.
 
 
-## Setup & Run
+# Environment Setup
+python -m venv venv
+venv\Scripts\activate   # Windows
 
-1. **Clone the Repository (bash)**
-   -git clone https://github.com/your-username/your-repo.git
-   -cd your-repo
 
-2. **Create a Virtual Environment**
--python -m venv venv
--source venv/bin/activate  # macOS/Linux
--venv\Scripts\activate     # Windows
+# Install Dependencies
+pip install -r requirements.txt
 
-3. **Install Dependencies**
--pip install -r requirements.txt
 
-4. **Run the Server**
--python run.py
+# Run Server
+--Navigate to project directory
+python run.py
 
-5. **Get Valid Public Keys**
--curl -X GET http://localhost:8080/jwks
 
-6. **Get a Valid JWT**
--curl -X POST http://localhost:8080/auth
+# Tests
+coverage run -m unittest discover -s . -p "test_*.py"
+coverage report -m
 
-7. **Get Expired JWT**
--curl -X POST http://localhost:8080/auth?expired=true
 
-8. **Testing**
--pip install coverage
--pip install requests
--pip freeze > requirements.txt
-
-   8a. **Open a new terminal after python run.py**
-    -python -m unittest discover -s tests -p "test_*.py" -v
-    -pip install coverage
-    -coverage run -m unittest discover -s tests -p "test_*.py"
-    -coverage report -m 
-
-**Output**
-test_auth_endpoint (test_server.TestJWKSServer) ... ok
-test_expired_auth_endpoint (test_server.TestJWKSServer) ... ok
-test_jwks_endpoint (test_server.TestJWKSServer) ... ok
- -----------------------
+# Example Output
+test_auth_endpoint         ... ok
+test_expired_auth_endpoint ... ok
+test_jwks_endpoint         ... ok
 
 Ran 3 tests in 0.1s
 OK
+
+
