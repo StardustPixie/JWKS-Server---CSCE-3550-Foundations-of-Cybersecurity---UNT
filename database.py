@@ -3,6 +3,7 @@ import os
 import time
 from cryptography.hazmat.primitives import serialization
 
+#Here is a path definition to the SQLite DB file within the project's root folder
 DB_FILE = os.path.join(os.getcwd(), "totally_not_my_privateKeys.db")
 
 def get_db_connection():
@@ -11,6 +12,7 @@ def get_db_connection():
     return conn
 
 def init_db():
+    #Database gets initialized and the keys table gets created
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -24,6 +26,7 @@ def init_db():
     conn.close()
 
 def insert_key(private_key, exp):
+    #Here the RSA private key is serialized to PEM format to store it inside of the DB
     pem = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.TraditionalOpenSSL,
@@ -42,8 +45,10 @@ def get_key(expired=False):
     cursor = conn.cursor()
     now = int(time.time())
     if expired:
+        #Gets an expired key for testing
         cursor.execute("SELECT * FROM keys WHERE exp <= ? ORDER BY exp DESC LIMIT 1", (now,))  
     else:
+        #Gets the first unexpired key
         cursor.execute("SELECT * FROM keys WHERE exp > ? ORDER BY exp ASC LIMIT 1", (now,))   
     row = cursor.fetchone()
     conn.close()
