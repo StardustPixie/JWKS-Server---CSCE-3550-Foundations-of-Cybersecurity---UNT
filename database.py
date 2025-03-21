@@ -53,6 +53,8 @@ def get_all_valid_keys():
     now = int(time.time())
     conn = get_db_connection()
     cursor = conn.cursor()
+
+    #I utilized a parameterized query to prevent an SQL injection attack
     cursor.execute("SELECT * FROM keys WHERE exp > ?", (now,))  
     rows = cursor.fetchall()
     conn.close()
