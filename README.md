@@ -33,11 +33,12 @@ coverage report -m
 ```
 
 # Example Output
+```bash
 test_auth_endpoint         ... ok
 test_expired_auth_endpoint ... ok
 test_jwks_endpoint         ... ok
 
 Ran 3 tests in 0.1s
 OK
-
+```
 
