@@ -10,23 +10,27 @@ A lightweight RESTful server for generating and serving JSON Web Keys (JWKS) to 
 
 
 # Environment Setup
+```bash
 python -m venv venv
 venv\Scripts\activate   # Windows
-
+```
 
 # Install Dependencies
+```bash
 pip install -r requirements.txt
-
+```
 
 # Run Server
 --Navigate to project directory
+```bash
 python run.py
-
+```
 
 # Tests
+```bash
 coverage run -m unittest discover -s . -p "test_*.py"
 coverage report -m
-
+```
 
 # Example Output
 test_auth_endpoint         ... ok
