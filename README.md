@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ```
 
 # Run Server
---Navigate to project directory
+- Navigate to project directory
 ```bash
 python run.py
 ```
